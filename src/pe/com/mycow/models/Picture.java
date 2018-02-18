@@ -13,6 +13,7 @@ public class Picture {
     }
 
     public int getId() {
+
         return id;
     }
 

@@ -54,7 +54,7 @@ public class UsersBean implements Serializable {
         service.createUser(this.getUser().getName());
         return "success";
     }
-    public String deleteRegion(User user){
+    public String deleteUser(User user){
         service.deleteUser(user.getId());
         return "success";
     }
