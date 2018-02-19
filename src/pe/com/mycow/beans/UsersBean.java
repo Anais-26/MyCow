@@ -51,7 +51,7 @@ public class UsersBean implements Serializable {
         return "success";
     }
     public  String createUser(){
-        service.createUser(this.getUser().getName());
+        service.createUser(this.getName());
         return "success";
     }
     public String deleteUser(User user){

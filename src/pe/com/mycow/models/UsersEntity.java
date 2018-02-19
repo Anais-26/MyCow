@@ -18,8 +18,11 @@ public class UsersEntity extends BaseEntity{
           try {
                 ResultSet resultSet = getConnection().createStatement().executeQuery(sql);
                 while (resultSet.next()) {
-                    User user = new User().setId(resultSet.getInt("user_id"))
-                            .setName(resultSet.getString("user_name"));
+                    User user = new User().setId(resultSet.getInt("id_user"))
+                            .setName(resultSet.getString("name"))
+                            .setEmail(resultSet.getString("email"))
+
+                            ;
                     users.add(user);                  
                 }
                 return users;
@@ -33,7 +36,7 @@ public class UsersEntity extends BaseEntity{
         return null;
     }
 
-    public List<User> findALL() {
+    public List<User> findAll() {
         return findByCriteria(DEFAULT_SQL);
     }
   
@@ -47,10 +50,10 @@ public class UsersEntity extends BaseEntity{
         return(users != null ? users.get(0) : null);
     }
 
-    public User findAll(String name){
+   /* public User findAll(String name){
         List<User> users = findByCriteria(DEFAULT_SQL+"WHERE user_name = '"+name + "'");
         return(users != null ? users.get(0) : null);
-    }
+    }*/
   
     private  int updatebycriteria(String sql){
         if(getConnection() != null){
@@ -64,7 +67,7 @@ public class UsersEntity extends BaseEntity{
         return 0;
     }
 
-    private int getId(){
+    /*private int getId(){
         String sql = "SELECT(user_id) AS id FROM users ";
 
         if(getConnection() != null){
@@ -78,15 +81,34 @@ public class UsersEntity extends BaseEntity{
 
         }
         return 0;
+    }*/
+
+    private int getMaxId() {
+        String sql = "SELECT MAX(id_user) AS max_id FROM users";
+        if(getConnection() != null) {
+            try {
+                ResultSet resultSet = getConnection()
+                        .createStatement()
+                        .executeQuery(sql);
+                return resultSet.next() ?
+                        resultSet.getInt("max_id") : 0;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return 0;
     }
 
     public  User create(String name){
         if(findByName(name) == null){
             if(getConnection() != null){
-                String sql = "INSERT INTO users(user_id,user_name)" +"VALUES(" + String.valueOf(getId()) + ", '"+name+"')";
+                String sql = "INSERT INTO users( id_user, name ) VALUES(" +
+                        String.valueOf(getMaxId() + 1) + ", '" +
+                        name + "')";
                 int results = updatebycriteria(sql);
                 if(results > 0){
-                    User user = new User();
+                    User user = new User(getMaxId(), name);
                     return user;
                 }
             }
@@ -106,7 +128,10 @@ public class UsersEntity extends BaseEntity{
 
     public boolean update(User user){
 
-        return updatebycriteria("UPDATE users SET user_name = '"+ user.getName()+ "' WHERE region_id ="+ String.valueOf(getId())) > 0;
+        return updatebycriteria("UPDATE users SET name = '" +
+                user.getName() + "' " +
+                "WHERE id_user ="+
+                String.valueOf(user.getId())) > 0;
 
     }
                      

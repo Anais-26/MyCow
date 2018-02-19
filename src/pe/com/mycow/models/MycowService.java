@@ -1,6 +1,10 @@
 package pe.com.mycow.models;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class MycowService {
@@ -13,7 +17,7 @@ public class MycowService {
         if(connection == null) {
             try {
                 connection = ((DataSource) InitialContext
-                        .doLookup("jdbc/MySQLDataSource"))
+                        .doLookup("jdbc/MySQLDataSource2"))
                         .getConnection();
             } catch (NamingException | SQLException e) {
                 e.printStackTrace();
@@ -46,40 +50,40 @@ public class MycowService {
         return workspacesEntity;
     }
 
-    public List<User> findAllRegions() {
+    public List<User> findAllUsers() {
         return getUsersEntity() != null ?
                 getUsersEntity().findAll() : null;
     }
 
-    public List<Workspace> findAllWorkspaces() {
+    /*public List<Workspace> findAllWorkspaces() {
         return (getWorkspacesEntity() != null &&
                 getUsersEntity() != null) ?
                 getWorkspacesEntity().findAll(getUsersEntity()) : null;
 
-    }
-    public Region findRegionById(int id) {
-        return getRegionsEntity() != null ?
-                getRegionsEntity().findById(id) : null;
-    }
-
-    public Region findRegionByName(String name) {
-        return getRegionsEntity() != null ?
-                getRegionsEntity().findByName(name) : null;
+    }*/
+    public User findUserById(int id) {
+        return getUsersEntity() != null ?
+                getUsersEntity().findById(id) : null;
     }
 
-    public Region createRegion(String name) {
-        return getRegionsEntity() != null ?
-                getRegionsEntity().create(name) : null;
+    public User findUserByName(String name) {
+        return getUsersEntity() != null ?
+                getUsersEntity().findByName(name) : null;
     }
 
-    public boolean deleteRegion(int id) {
-        return getRegionsEntity() != null ?
-                getRegionsEntity().delete(id) : false;
+    public User createUser(String name) {
+        return getUsersEntity() != null ?
+                getUsersEntity().create(name) : null;
     }
 
-    public boolean updateRegion(Region region) {
-        return getRegionsEntity() != null ?
-                getRegionsEntity().update(region) : false;
+    public boolean deleteUser(int id) {
+        return getUsersEntity() != null ?
+                getUsersEntity().delete(id) : false;
+    }
+
+    public boolean updateUser(User region) {
+        return getUsersEntity() != null ?
+                getUsersEntity().update(region) : false;
     }
 
 
