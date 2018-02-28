@@ -8,29 +8,23 @@ public class User {
     private String password;
     private String email;
     private int age;
-    private int phone;
     private int dni;
 
-    public User(int id, String name, String lastName, String password, String email, int age, int phone, int dni) {
+    public User() {
+    }
+
+    public User(int id, String name, String lastName, String password, String email, int age, int dni) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.age = age;
-        this.phone = phone;
         this.dni = dni;
     }
 
-    public User() {
-    }
-
-    public User(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public int getId() {
+
         return id;
     }
 
@@ -40,6 +34,7 @@ public class User {
     }
 
     public String getName() {
+
         return name;
     }
 
@@ -49,6 +44,7 @@ public class User {
     }
 
     public String getLastName() {
+
         return lastName;
     }
 
@@ -58,6 +54,7 @@ public class User {
     }
 
     public String getPassword() {
+
         return password;
     }
 
@@ -67,6 +64,7 @@ public class User {
     }
 
     public String getEmail() {
+
         return email;
     }
 
@@ -76,6 +74,7 @@ public class User {
     }
 
     public int getAge() {
+
         return age;
     }
 
@@ -84,16 +83,9 @@ public class User {
         return this;
     }
 
-    public int getPhone() {
-        return phone;
-    }
-
-    public User setPhone(int phone) {
-        this.phone = phone;
-        return this;
-    }
 
     public int getDni() {
+
         return dni;
     }
 
@@ -104,3 +96,4 @@ public class User {
 
 
 }
+
