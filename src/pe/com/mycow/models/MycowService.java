@@ -11,9 +11,9 @@ public class MycowService {
 
     private Connection connection;
     private UsersEntity usersEntity;
-    private WorkspacesEntity workspacesEntity;
+  /*  private WorkspacesEntity workspacesEntity;*/
 
-    private Connection getConnection() {
+    public Connection getConnection() {
         if(connection == null) {
             try {
                 connection = ((DataSource) InitialContext
@@ -39,7 +39,7 @@ public class MycowService {
         }
         return usersEntity;
     }
-
+/*
     protected WorkspacesEntity getCountriesEntity() {
         if(getConnection() != null) {
             if(workspacesEntity == null) {
@@ -49,7 +49,7 @@ public class MycowService {
         }
         return workspacesEntity;
     }
-
+*/
     public List<User> findAllUsers() {
         return getUsersEntity() != null ?
                 getUsersEntity().findAll() : null;
@@ -71,9 +71,10 @@ public class MycowService {
                 getUsersEntity().findByName(name) : null;
     }
 
-    public User createUser(String name) {
+    //esto de abajo es para obtener el usuario?
+    public User createUser(String name,String lastname, String password, String email, int age, int dni) {
         return getUsersEntity() != null ?
-                getUsersEntity().create(name) : null;
+                getUsersEntity().create(name,lastname,password,email,age,dni) : null;
     }
 
     public boolean deleteUser(int id) {
@@ -81,10 +82,14 @@ public class MycowService {
                 getUsersEntity().delete(id) : false;
     }
 
-    public boolean updateUser(User region) {
+    public boolean updateUser(User user) {
         return getUsersEntity() != null ?
-                getUsersEntity().update(region) : false;
+                getUsersEntity().update(user) : false;
     }
 
+    public User findUserByEmail(String email) {
+        return getUsersEntity() != null ?
+                getUsersEntity().findByEmail(email) : null;
+    }
 
 }
